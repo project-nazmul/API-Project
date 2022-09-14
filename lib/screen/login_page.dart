@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:admin/screen/home_page.dart';
+import 'package:admin/screen/bottom_nav/bottom_nav.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:admin/api_service/custom_api.dart';
 import 'package:admin/widget/const.dart';
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.getString("token") != null) {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+          .pushReplacement(MaterialPageRoute(builder: (context) => BottomNavPage()));
     }
   }
 
@@ -50,10 +50,10 @@ class _LoginPageState extends State<LoginPage> {
           sharedPreferences.setString("token", data["access_token"]);
           sharedPreferences.setString("email", emailController.text);
         });
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+        print(data["access_token"]);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BottomNavPage()));
       }
-       
-      print("$data");
+
     } catch (e) {
       print("$e");
     }

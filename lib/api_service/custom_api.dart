@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:admin/model/order_model.dart';
 import 'package:admin/widget/const.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomeHttp {
   static const Map<String, String> defaultHeader = {
@@ -27,6 +31,45 @@ class CustomeHttp {
       }
     } catch (e) {
       return "something is wrong$e";
+    }
+  }
+
+  static Future<Map<String, String>> getHeaderWithToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var header = {
+      "Accept": "application/json",
+      "Authorization": "bearer ${sharedPreferences.getString("token")}",
+    };
+    print("user token isssss ${sharedPreferences.getString("token")}");
+    return header;
+  }
+
+  Future<List<OrderModel>> fetchOrder() async {
+    List<OrderModel> orderList = [];
+    try {
+      var link = "${baseUrl}api/admin/all/orders";
+      var responce = await http.get(
+          Uri.parse(
+            link,
+          ),
+          headers: await getHeaderWithToken());
+
+      if (responce.statusCode == 200) {
+        var data = jsonDecode(responce.body);
+        OrderModel orderModel;
+        for (var i in data) {
+          orderModel = OrderModel.fromJson(i);
+          orderList.add(orderModel);
+        }
+        print("Order Data is ${data}");
+        return orderList;
+      } else {
+        showInToast("Something is wrong bro!");
+        return orderList;
+      }
+    } catch (e) {
+      print("Errorrrrrrrrrrrrrr $e");
+      return orderList;
     }
   }
 }
