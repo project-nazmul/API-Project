@@ -9,6 +9,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Profile"),
+        centerTitle: true,
         actions: [
           InkWell(
               onTap: ()async{

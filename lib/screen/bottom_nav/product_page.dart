@@ -5,6 +5,11 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Products"),
+        centerTitle: true,
+      ),
+    );
   }
 }

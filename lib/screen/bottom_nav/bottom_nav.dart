@@ -55,15 +55,15 @@ class _BottomNavPageState extends State<BottomNavPage> {
               color: Colors.black,
               tabs: [
                 GButton(
-                  icon: Icons.home,
+                  icon: Icons.reorder,
                   text: 'Order',
                 ),
                 GButton(
-                  icon: Icons.category,
+                  icon: Icons.production_quantity_limits,
                   text: 'Product',
                 ),
                 GButton(
-                  icon: Icons.production_quantity_limits,
+                  icon: Icons.category_outlined,
                   text: 'Category',
                 ),
                 GButton(

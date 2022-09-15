@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:admin/model/order_model.dart';
 import 'package:admin/widget/const.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +8,15 @@ class CustomeHttp {
   static const Map<String, String> defaultHeader = {
     "Accept": "application/json",
   };
+  static Future<Map<String, String>> getHeaderWithToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var header = {
+      "Accept": "application/json",
+      "Authorization": "bearer ${sharedPreferences.getString("token")}",
+    };
+    print("user token isssss ${sharedPreferences.getString("token")}");
+    return header;
+  }
 
   static Future<String> login(String email, String password) async {
     try {
@@ -32,16 +40,6 @@ class CustomeHttp {
     } catch (e) {
       return "something is wrong$e";
     }
-  }
-
-  static Future<Map<String, String>> getHeaderWithToken() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var header = {
-      "Accept": "application/json",
-      "Authorization": "bearer ${sharedPreferences.getString("token")}",
-    };
-    print("user token isssss ${sharedPreferences.getString("token")}");
-    return header;
   }
 
   Future<List<OrderModel>> fetchOrder() async {
