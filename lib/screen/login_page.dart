@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:admin/screen/bottom_nav/bottom_nav.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:admin/api_service/custom_api.dart';
-import 'package:admin/widget/const.dart';
-import 'package:admin/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -65,41 +64,81 @@ class _LoginPageState extends State<LoginPage> {
       body: ModalProgressHUD(
         inAsyncCall: isLoading,
         //dismissible: false,
-        blur: 1,
+        blur: 10,
         opacity: 0.5,
 
-        progressIndicator: CircularProgressIndicator(),
+        progressIndicator: SpinKitSpinningLines(
+          color: Colors.green,
+          lineWidth: 4,
+        ),
         child: Container(
           width: double.infinity,
           padding: EdgeInsets.all(22),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Login",
-                style: myStyle(
-                  35,
-                  Colors.blue,
-                  FontWeight.bold
-                ),
+                "Enter your Email and Password",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
               ),
-              CustomTextField(
-                controller: emailController,
-                hintText: "Enter your email",
-                lebelText: "Email",
-                icon: Icons.email,
+              const SizedBox(
+                height: 20,
               ),
-              CustomTextField(
-                controller: passwordController,
-                hintText: "Enter your password",
-                lebelText: "Password",
-                icon: Icons.lock,
-              ),
+              TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.green, width: 2)),
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Colors.green,
+                      ),
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.green, width: 2)),
+                      label: Text("Email"),
+                      labelStyle: TextStyle(color: Colors.green),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.green, width: 2)))),
+              SizedBox(height: 10,),
+              TextFormField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.green, width: 2)),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.green,
+                      ),
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.green, width: 2)),
+                      label: Text("Password"),
+                      labelStyle: TextStyle(color: Colors.green),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.green, width: 2)))),
+              SizedBox(height: 10,),
               ElevatedButton(
                   onPressed: () {
                     getLogin();
                   },
-                  child: Text("Submit"))
+                  style: const ButtonStyle(
+                      backgroundColor:
+                      MaterialStatePropertyAll(Colors.green)),
+                  child: Text("Submit",style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),))
             ],
           ),
         ),
